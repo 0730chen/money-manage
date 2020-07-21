@@ -1,11 +1,19 @@
-import { Controller,Post} from '@nestjs/common';
+import {Body, Controller, Get, Post, Res} from '@nestjs/common';
+import CreateAccountDto from "../Dto/create-account.dto";
 
 
-@Controller()
-export class AppController {
+@Controller('login')
+export class LoginController {
 
+    @Get()
+    findAll():string{
+        console.log(111)
+        return '登陆页'
+    }
     @Post()
-    getHello(): string {
-        return '登陆'
+    createAccount(@Body() createAccountDto:CreateAccountDto): string {
+
+        console.log(createAccountDto.name,createAccountDto.password)
+        return '创建一个账户'
     }
 }
