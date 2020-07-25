@@ -3,6 +3,7 @@ import {InjectModel} from "@nestjs/mongoose";
 import {Post} from './interfaces/user.interface'
 import { Model } from 'mongoose';
 import {CreateUserDTO} from "./dto/user.dto";
+
 type User = {
     records: any[];
     password: string;
