@@ -2,9 +2,12 @@ import { Injectable } from '@nestjs/common';
 import {InjectModel} from "@nestjs/mongoose";
 import {Post} from './interfaces/user.interface'
 import { Model } from 'mongoose';
+import {CreateUserDTO} from "./dto/user.dto";
 type User = {
-    name:string,
-    password:string
+    records: any[];
+    password: string;
+    name: string;
+    tags:string[]
 }
 
 @Injectable()
@@ -18,10 +21,11 @@ export class UserService {
         return posts;
     }
     //根据参数创建用户
-    async createUser(user:User):Promise<Post[]>{
-        console.log(this.postModel,user)
-        const posts = this.postModel(user)
-        return posts.save()
+    async createUser(user: { password: string; records: any[]; name: string; tags: any[] }):Promise<Post[]>{
+        console.log(user,'传过来的参数')
+        const User = new this.postModel(user)
+        // const posts = this.postModel(user)
+        return User.save()
     }
 
 }

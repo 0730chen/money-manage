@@ -6,7 +6,7 @@ import * as mongoose from 'mongoose';
 
 export const UserSchema = new mongoose.Schema({
         name:String,
-        passWord:String,
+        password:String,
         tags:[],
         record:[],
     },{collection:'user'}
