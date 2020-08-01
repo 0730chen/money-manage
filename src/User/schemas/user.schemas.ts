@@ -12,3 +12,4 @@ export const UserSchema = new mongoose.Schema({
         record:[],
     },{collection:'user'}
 )
+export const UserModel = mongoose.model('user',UserSchema)
