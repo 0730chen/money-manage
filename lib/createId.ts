@@ -1,6 +1,6 @@
-let index = 0
+let index: number
 const createId =  ()=>{
-    index +=1
+    index = new Date().getTime()
     return index
 }
 

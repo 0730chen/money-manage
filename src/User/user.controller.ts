@@ -2,6 +2,8 @@ import {Body, Controller, Get, HttpStatus, Param, Post, Put, Res} from '@nestjs/
 import {UserService} from "./user.service";
 import {CreateUserDTO} from "./dto/user.dto";
 import {createId} from "../../lib/createId";
+
+
 @Controller('user')
 export class UserController {
     constructor(private userService: UserService) { }
@@ -19,6 +21,7 @@ export class UserController {
         console.log(User);
         return User
     }
+
     @Post('createUser')
     async createAccount(@Body() createAccountDto:CreateUserDTO,@Res() res) {
         let User = {
@@ -28,6 +31,7 @@ export class UserController {
             tags: [],
             records: []
         };
+        console.log(User);
         const posts = await this.userService.createUser(User);
         return res.status(HttpStatus.OK).json(posts);
     }

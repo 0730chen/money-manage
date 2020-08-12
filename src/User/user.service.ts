@@ -16,8 +16,9 @@ export class UserService {
     }
     //根据参数创建用户
     //新增方法 this.postModel(params)
-    async createUser(user: { password: string; records: any[]; name: string; tags: any[] }):Promise<Post[]>{
+    async createUser(user: { password: string; records: any[]; name: string; _id: number; tags: any[] }):Promise<Post[]>{
         console.log(user,'传过来的参数')
+        this.postModel.find(user.name)
         const User = new this.postModel(user)
         // const posts = this.postModel(user)
         return User.save()
