@@ -12,6 +12,7 @@ export class UserController {
     async getPageList(@Res() res) {
         console.log('全部用户列表')
         const posts = await this.userService.getUser();
+        console.log('控制器',posts);
         return res.status(HttpStatus.OK).json(posts);
     };
     @Get(':id')
@@ -24,6 +25,8 @@ export class UserController {
 
     @Post('createUser')
     async createAccount(@Body() createAccountDto:CreateUserDTO,@Res() res) {
+
+        console.log(createAccountDto);
         let User = {
             _id: createId(),
             name: createAccountDto.name,
@@ -32,8 +35,15 @@ export class UserController {
             records: []
         };
         console.log(User);
-        const posts = await this.userService.createUser(User);
-        return res.status(HttpStatus.OK).json(posts);
+        //先根据用户查询
+        const userFlag = await  this.userService.findTags(createAccountDto.name)
+        console.log(userFlag);
+        if(userFlag.name){
+            return res.status(HttpStatus.OK).json(userFlag);
+        }else {
+            const posts = await this.userService.createUser(User);
+            return res.status(HttpStatus.OK).json(posts);
+        }
     }
 
 }

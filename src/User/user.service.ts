@@ -9,9 +9,9 @@ export class UserService {
     //查询所有的注册用户
     //查询全部的
     async getUser(): Promise<Post[]> {
-        console.log(this.postModel)
         //postModel就是数据库的
-        const posts = this.postModel.find().exec();
+        const posts = await this.postModel.find().exec();
+        console.log(posts)
         return posts;
     }
     //根据参数创建用户
@@ -25,8 +25,8 @@ export class UserService {
     }
     //查询用户的标签
     //根据id查询
-    async findTags(id):Promise<Post>{
-        return  await this.postModel.findById(id)
+    async findTags(name):Promise<Post>{
+        return  await this.postModel.find({name})
             .exec()
     }
     //更新方法
