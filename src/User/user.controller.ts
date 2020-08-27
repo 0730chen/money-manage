@@ -2,6 +2,7 @@ import {Body, Controller, Get, HttpStatus, Param, Post, Put, Res} from '@nestjs/
 import {UserService} from "./user.service";
 import {CreateUserDTO} from "./dto/user.dto";
 import {createId} from "../../lib/createId";
+import {type} from "os";
 //定义一个返回接口
 interface Result {
     code: number;
@@ -58,12 +59,19 @@ export class UserController {
 
     // /user/1此时id就是1
     //传入用户名，获得最新的内容
-    @Put(':name')
-    async updateCat(@Param('name') name: string, @Body() params): Promise<Result> {
-        console.log(name,'用户名');
-        console.log(params,'全部的参数');
-        const user = await this.userService.findTags(name)
-        return { code: 200, message: '更新成功',data:user };
+    @Put('tags')
+    async updateCat(@Body() body): Promise<Result> {
+        console.log(body);
+        // let {name,tags} = body
+        let name = body.name
+
+        console.log(body.name,name)
+        console.log(body.tags);
+        const user = await this.userService.editUser(body)
+
+        console.log(user,'返回的结果');
+
+        return { code: 200, message: '更新成功',data:'xxx' };
     }
     // @Put('tags')
     // async updateTags(@Param(name):Promise<Result>) {
