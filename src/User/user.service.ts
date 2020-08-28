@@ -38,7 +38,7 @@ export class UserService {
     async editUser(params):Promise<Post>{
         console.log(params);
         return await this.postModel
-            .updateOne({name:params.name},{$set:params});
+            .findOneAndUpdate({name:params.name},{$set:{tags:params.tags}},{new:true});
     }
     //删除
     async deleteUser(id):Promise<Post>{

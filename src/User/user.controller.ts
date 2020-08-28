@@ -67,11 +67,16 @@ export class UserController {
 
         console.log(body.name,name)
         console.log(body.tags);
-        const user = await this.userService.editUser(body)
+        try {
+            const user = await this.userService.editUser(body)
+            console.log(user)
 
-        console.log(user,'返回的结果');
+            return { code: 200, message: '更新成功',data:user };
+        }catch (e) {
+            console.log(e)
+            return { code: 404, message: '更新失败',data:'error' };
+        }
 
-        return { code: 200, message: '更新成功',data:'xxx' };
     }
     // @Put('tags')
     // async updateTags(@Param(name):Promise<Result>) {

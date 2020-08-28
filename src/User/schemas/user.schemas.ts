@@ -3,6 +3,7 @@
  * collection选择需要查看的表
  * **/
 import * as mongoose from 'mongoose';
+mongoose.set('useFindAndModify', false)
 
 export const UserSchema = new mongoose.Schema({
         _id:Number,
