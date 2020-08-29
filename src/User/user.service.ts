@@ -24,7 +24,7 @@ export class UserService {
         return User.save()
     }
     //查询用户的标签
-    //根据id查询
+    //根据用户名
     async findTags(params):Promise<Post>{
         console.log(params);
         try {
@@ -35,14 +35,20 @@ export class UserService {
         }
     }
     //更新方法
-    async editUser(params):Promise<Post>{
-        console.log(params);
-        return await this.postModel
-            .findOneAndUpdate({name:params.name},{$set:{tags:params.tags}},{new:true});
+    async editUser(name,key,value):Promise<Post>{
+
+        if(key==='tags'){
+            return await this.postModel
+                .findOneAndUpdate({name:name},{$set:{tags:value}},{new:true});
+        }else {
+            return await this.postModel
+                .findOneAndUpdate({name:name},{$set:{record:value}},{new:true});
+        }
     }
     //删除
     async deleteUser(id):Promise<Post>{
         return await this.postModel
             .findByIdAndRemove(id);
     }
+    //
 }

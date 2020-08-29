@@ -66,7 +66,7 @@ export class UserController {
         console.log(body.name,name)
         console.log(body.tags);
         try {
-            const user = await this.userService.editUser(body)
+            const user = await this.userService.editUser(name,'tags',body.tags)
             console.log(user)
 
             return { code: 200, message: '更新成功',data:user };
@@ -76,6 +76,29 @@ export class UserController {
         }
 
     }
+
+/**
+ * @param
+ * 获取name和record
+ * */
+    @Post('/record')
+    async addRecord(@Body() body):Promise<Result>{
+        //获取传入的用户名
+        let name = body.name
+        let newRecord = body.record
+    //根据name查找记录
+    try{
+            let record = await this.userService.findTags(name)
+            let newObj = Object.assign({},record)
+
+            let result = await this.userService.editUser(name,'record',newRecord)
+        return { code: 200, message: '更新成功',data:result};
+    } catch (e) {
+            return {code:400,message:'error',data:e}
+    }
+
+    }
+
     // @Put('tags')
     // async updateTags(@Param(name):Promise<Result>) {
     //     console.log(name);

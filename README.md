@@ -32,4 +32,4 @@
 |参数|类型|含义|
 |----|---|----|
 |name|string|用户名|
-|tags|array|改用的全部tags数据|
+|record|string|储存这一条记录|
