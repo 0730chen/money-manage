@@ -16,9 +16,7 @@ export class UserController {
 
     @Get('pageList')
     async getPageList(@Res() res) {
-        console.log('全部用户列表')
         const posts = await this.userService.getUser();
-        console.log('控制器',posts);
         return res.status(HttpStatus.OK).json(posts);
     };
     @Get(':id')
