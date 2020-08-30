@@ -63,8 +63,6 @@ export class UserController {
         // let {name,tags} = body
         let name = body.name
 
-        console.log(body.name,name)
-        console.log(body.tags);
         try {
             const user = await this.userService.editUser(name,'tags',body.tags)
             console.log(user)
