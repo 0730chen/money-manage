@@ -4,4 +4,5 @@ export class CreateUserDTO {
     readonly password: string;
     readonly tags: string;
     readonly record: string;
+    readonly tagType:object[]
 }

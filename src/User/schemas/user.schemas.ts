@@ -11,6 +11,7 @@ export const UserSchema = new mongoose.Schema({
         password:String,
         tags:[],
         record:[],
+        tagType:[],
     },{collection:'user'}
 )
 export const UserModel = mongoose.model('user',UserSchema)

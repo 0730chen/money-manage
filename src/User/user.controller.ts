@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpStatus, Param, Post, Put, Res} from '@nestjs/common';
+import {Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put, Res} from '@nestjs/common';
 import {UserService} from "./user.service";
 import {CreateUserDTO} from "./dto/user.dto";
 import {createId} from "../../lib/createId";
@@ -40,18 +40,28 @@ export class UserController {
             name: createAccountDto.name,
             password: createAccountDto.password,
             tags: [],
-            records: []
+            records: [],
+            tagType: createAccountDto.tagType
         };
-        console.log(User);
         //先根据用户查询
         const userFlag = await  this.userService.findTags(createAccountDto.name)
-        console.log(userFlag);
+
+        console.log(userFlag.name,userFlag.password);
         if(userFlag.name){
-            return res.status(HttpStatus.OK).json(userFlag);
-        }else {
+            if(createAccountDto.password===userFlag.password){
+                console.log('登陆成功')
+                return res.status(HttpStatus.OK).json(userFlag);
+            }else {
+                console.log('用户名存在，密码不正确')
+                return {code:404,message:'用户名重复或密码不正确',data:new HttpException('',HttpStatus.BAD_REQUEST)}
+            }
+        }
+        if(!!userFlag){
             const posts = await this.userService.createUser(User);
+            console.log(posts);
             return res.status(HttpStatus.OK).json(posts);
         }
+
     }
 
 

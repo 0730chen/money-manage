@@ -11,13 +11,11 @@ export class UserService {
     async getUser(): Promise<Post[]> {
         //postModel就是数据库的
         const posts = await this.postModel.find().exec();
-        console.log(posts)
         return posts;
     }
     //根据参数创建用户
     //新增方法 this.postModel(params)
     async createUser(user: { password: string; records: any[]; name: string; _id: number; tags: any[] }):Promise<Post[]>{
-        console.log(user,'传过来的参数')
         this.postModel.find(user.name)
         const User = new this.postModel(user)
         // const posts = this.postModel(user)
@@ -28,7 +26,7 @@ export class UserService {
     async findTags(params):Promise<Post>{
         console.log(params);
         try {
-             return await this.postModel.find({name:params})
+            return await this.postModel.find({name:params})
                 .exec()
         }catch (e) {
             return e.message
