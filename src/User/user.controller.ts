@@ -32,9 +32,8 @@ export class UserController {
 
     * */
     @Post('createUser')
-    async createAccount(@Body() createAccountDto:CreateUserDTO,@Res() res) {
+    async createAccount(@Body() createAccountDto:CreateUserDTO,@Res() res): Promise<Result> {
 
-        console.log(createAccountDto);
         let User = {
             _id: createId(),
             name: createAccountDto.name,
@@ -44,24 +43,25 @@ export class UserController {
             tagType: createAccountDto.tagType
         };
         //先根据用户查询
-        const userFlag = await  this.userService.findTags(createAccountDto.name)
+        const userFlag = await this.userService.findTags(createAccountDto.name)
+        console.log('查询到的结果')
+        console.log(userFlag)
+        //不存在则返回空数组
+        if(userFlag.toString()==='') {
 
-        console.log(userFlag.name,userFlag.password);
-        if(userFlag.name){
-            if(createAccountDto.password===userFlag.password){
+            const posts = await this.userService.createUser(User);
+            console.log('创建一个用户')
+            return res.status(HttpStatus.OK).json(posts);
+        }else {
+            if (userFlag[0].name && createAccountDto.password === userFlag[0].password) {
                 console.log('登陆成功')
                 return res.status(HttpStatus.OK).json(userFlag);
-            }else {
-                console.log('用户名存在，密码不正确')
-                return {code:404,message:'用户名重复或密码不正确',data:new HttpException('',HttpStatus.BAD_REQUEST)}
+            } else {
+                console.log('密码错误或用户名重复')
+                return  res.status(401).json({ message: '用户名重复或密码不正确', data: new HttpException('', HttpStatus.BAD_REQUEST)})
+                // return {code: 404, message: '用户名重复或密码不正确', data: new HttpException('', HttpStatus.BAD_REQUEST)}
             }
         }
-        if(!!userFlag){
-            const posts = await this.userService.createUser(User);
-            console.log(posts);
-            return res.status(HttpStatus.OK).json(posts);
-        }
-
     }
 
 
