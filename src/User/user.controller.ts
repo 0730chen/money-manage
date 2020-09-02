@@ -89,7 +89,7 @@ export class UserController {
  * @param
  * 获取name和record
  * */
-    @Post('/record')
+    @Post('record')
     async addRecord(@Body() body):Promise<Result>{
         //获取传入的用户名
         let name = body.name
