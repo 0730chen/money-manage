@@ -3,6 +3,7 @@ import {UserService} from "./user.service";
 import {CreateUserDTO} from "./dto/user.dto";
 import {createId} from "../../lib/createId";
 import {type} from "os";
+import {json} from "express";
 //定义一个返回接口
 interface Result {
     code: number;
@@ -51,15 +52,14 @@ export class UserController {
 
             const posts = await this.userService.createUser(User);
             console.log('创建一个用户')
-            return res.status(HttpStatus.OK).json(posts);
+            return res.status(HttpStatus.OK).json({success:'成功',status:HttpStatus.OK,data:posts},200);
         }else {
             if (userFlag[0].name && createAccountDto.password === userFlag[0].password) {
                 console.log('登陆成功')
-                return res.status(HttpStatus.OK).json(userFlag);
+                return res.status(HttpStatus.OK).json({success:'成功',status:HttpStatus.OK,data:userFlag},200);
             } else {
                 console.log('密码错误或用户名重复')
-                return  res.status(401).json({ message: '用户名重复或密码不正确', data: new HttpException('', HttpStatus.BAD_REQUEST)})
-                // return {code: 404, message: '用户名重复或密码不正确', data: new HttpException('', HttpStatus.BAD_REQUEST)}
+                return res.status(HttpStatus.OK).json({error:'用户名错误或密码不正确',status:HttpStatus.FORBIDDEN},401)
             }
         }
     }
