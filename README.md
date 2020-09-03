@@ -15,6 +15,15 @@
 
 * 方法：get
 
+#### 添加用户标签（记账类型的标签）
+##### /user/tags
+* 方法：post
+
+|参数|类型|含义|
+|----|---|----|
+|name|string|用户名|
+|tags|array|新增的tags数据|
+
 #### 更新用户标签（记账类型的标签）
 ##### /user/tags
 * 方法：put
@@ -22,7 +31,7 @@
 |参数|类型|含义|
 |----|---|----|
 |name|string|用户名|
-|tags|array|改用的全部tags数据|
+|tags|array|全部tags数据|
 
 #### 添加一条记录
 ##### /user/record(用户的记录)
