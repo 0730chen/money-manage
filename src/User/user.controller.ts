@@ -57,7 +57,8 @@ export class UserController {
             if (userFlag[0].name && createAccountDto.password === userFlag[0].password) {
                 return res.status(HttpStatus.OK).json({success: '成功', status: HttpStatus.OK, data: userFlag}, 200);
             } else {
-                return res.status(HttpStatus.OK).json({error: '用户名错误或密码不正确', status: HttpStatus.FORBIDDEN}, 401)
+                //401是存在与data数据中，200是设置http状态码
+                return res.status(HttpStatus.OK).json({error: '用户名错误或密码不正确', status:401},200)
             }
         }
     }
