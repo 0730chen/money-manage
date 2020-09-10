@@ -99,8 +99,18 @@ export class UserController {
 
     }
 
+    /*
+    *
+    * */
+    @Get('record/pageList')
+
+    async getRecordList(@Body() body):Promise<Result>{
+        let name= body.name
+        const userFlag = await this.userService.findTags(name)
+        return {code: 200, message: '更新成功', data:userFlag};
+    }
     /**
-     * @param
+     *
      * 获取name和record
      * */
     @Post('record')
@@ -120,11 +130,6 @@ export class UserController {
         }
 
     }
-
-    // @Put('tags')
-    // async updateTags(@Param(name):Promise<Result>) {
-    //     console.log(name);
-    // }
 
 }
 
